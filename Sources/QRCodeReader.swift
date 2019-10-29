@@ -36,7 +36,7 @@ protocol QRCodeReaderLifeCycleDelegate: class {
 public final class QRCodeReader: NSObject, AVCaptureMetadataOutputObjectsDelegate {
   private let sessionQueue         = DispatchQueue(label: "session queue")
   private let metadataObjectsQueue = DispatchQueue(label: "com.yannickloriot.qr", attributes: [], target: nil)
-  
+
   let defaultDevice: AVCaptureDevice? = AVCaptureDevice.default(for: .video)
   let frontDevice: AVCaptureDevice?   = {
     if #available(iOS 10, *) {
@@ -275,14 +275,14 @@ public final class QRCodeReader: NSObject, AVCaptureMetadataOutputObjectsDelegat
    - parameter supportedOrientations: The supported orientations of the application.
    - parameter fallbackOrientation: The video orientation if the device orientation is FaceUp or FaceDown.
    */
-  public class func videoOrientation(deviceOrientation orientation: UIDeviceOrientation, withSupportedOrientations supportedOrientations: UIInterfaceOrientationMask, fallbackOrientation: AVCaptureVideoOrientation? = nil) -> AVCaptureVideoOrientation {
+  public class func videoOrientation(deviceOrientation orientation: UIInterfaceOrientation, withSupportedOrientations supportedOrientations: UIInterfaceOrientationMask, fallbackOrientation: AVCaptureVideoOrientation? = nil) -> AVCaptureVideoOrientation {
     let result: AVCaptureVideoOrientation
 
     switch (orientation, fallbackOrientation) {
     case (.landscapeLeft, _):
-      result = .landscapeRight
-    case (.landscapeRight, _):
       result = .landscapeLeft
+    case (.landscapeRight, _):
+      result = .landscapeRight
     case (.portrait, _):
       result = .portrait
     case (.portraitUpsideDown, _):

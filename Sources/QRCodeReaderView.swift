@@ -139,7 +139,7 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
 
   func addGreenBorder() {
     self.startTimerForBorderReset()
-    
+
     self.overlayView?.setState(.valid)
   }
 
@@ -150,7 +150,7 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
 
     if let connection = reader?.previewLayer.connection, connection.isVideoOrientationSupported {
       let application                    = UIApplication.shared
-      let orientation                    = UIDevice.current.orientation
+      let orientation                    = application.statusBarOrientation
       let supportedInterfaceOrientations = application.supportedInterfaceOrientations(for: application.keyWindow)
 
       connection.videoOrientation = QRCodeReader.videoOrientation(deviceOrientation: orientation, withSupportedOrientations: supportedInterfaceOrientations, fallbackOrientation: connection.videoOrientation)
@@ -181,14 +181,14 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
     if let ttb = toggleTorchButton {
       addSubview(ttb)
     }
-    
+
     if let cb = cancelButton {
       addSubview(cb)
     }
 
     if let reader = reader {
       cameraView.layer.insertSublayer(reader.previewLayer, at: 0)
-      
+
       setNeedsUpdateOrientation()
     }
   }
